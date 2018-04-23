@@ -1,0 +1,10 @@
+classes= 9418
+#train  = /home/pjreddie/vendor/darknet/data/coco/trainvalno5k.txt
+train  = vendor/darknet/data/combine9k.train.list
+valid  = /home/pjreddie/vendor/darknet/data/imagenet/det.val.files
+labels = vendor/darknet/data/9k.labels
+names  = vendor/darknet/data/9k.names
+backup = backup/
+map = vendor/darknet/data/inet9k.map
+eval = imagenet
+results = results

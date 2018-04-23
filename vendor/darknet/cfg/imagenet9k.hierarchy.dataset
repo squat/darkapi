@@ -1,0 +1,9 @@
+classes=9418
+train  = vendor/darknet/data/9k.train.list
+valid  = /vendor/darknet/data/imagenet/imagenet1k.valid.list
+leaves = vendor/darknet/data/imagenet1k.labels
+backup = /home/pjreddie/backup/
+labels = vendor/darknet/data/9k.labels
+names  = vendor/darknet/data/9k.names
+top=5
+

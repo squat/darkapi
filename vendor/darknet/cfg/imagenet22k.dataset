@@ -1,0 +1,9 @@
+classes=21842
+train  = /vendor/darknet/data/imagenet/imagenet22k.train.list
+valid  = /vendor/darknet/data/imagenet/imagenet22k.valid.list
+#valid  = /vendor/darknet/data/imagenet/imagenet1k.valid.list
+backup = /home/pjreddie/backup/
+labels = vendor/darknet/data/imagenet.labels.list
+names  = vendor/darknet/data/imagenet.shortnames.list
+top = 5
+
