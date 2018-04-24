@@ -28,7 +28,6 @@ spec:
         resources:
           limits:
             nvidia.com/gpu: 1
-      hostNetwork: true
       tolerations:
       - key: nvidia.com/gpu
         effect: NoSchedule
