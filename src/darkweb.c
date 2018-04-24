@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
     /* Open listening socket */
     mg_mgr_init(&mgr, NULL);
     c = mg_bind(&mgr, port, ev_handler, NULL);
-    mg_register_http_endpoint(c, "/api/health", health_handler, NULL);
+    mg_register_http_endpoint(c, "/healthz", health_handler, NULL);
     mg_register_http_endpoint(c, "/api/yolo9000", detect_handler, (void *)&ctx);
     mg_register_http_endpoint(c, "/api/tiny", detect_handler, (void *)&ctx);
     mg_register_http_endpoint(c, "/api/yolo", detect_handler, (void *)&ctx);
