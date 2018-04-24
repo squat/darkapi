@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: darkweb
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: darkweb
+  template:
+    metadata:
+      labels:
+        app: darkweb
+    spec:
+      containers:
+      - name: darkweb
+        image: squat/darkweb
+        imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+      hostNetwork: true
+      tolerations:
+      - key: nvidia.com/gpu
+        effect: NoSchedule
+        operator: Exists
