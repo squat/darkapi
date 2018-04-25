@@ -59,7 +59,7 @@ make weights
 By default, the Darkweb API server runs on port *8080*, though this can be configured with the `-p` flag.
 
 ```sh
-darkweb -p=1337
+darkweb -p 1337
 ```
 
 #### POST `/api/yolo`
