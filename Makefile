@@ -7,8 +7,10 @@ TOOLPREFIX :=
 TOOLPOSTFIX :=
 
 BIN := darkweb
+CLIENTBIN := client
 PKG := github.com/squat/$(BIN)
 DARKNETVERSION := master
+JSONPARSERVERSION := b42439a2927a879f40698e4861e727c4265c13e6
 MONGOOSEVERSION := 6.10
 STBVERSION := master
 BUILD_IMAGE := nvidia/cuda:9.1-cudnn7-devel
@@ -66,6 +68,9 @@ $(OBJDIR)/libdarknet.a: $(DARKNETDIR)/libdarknet.a
 $(DARKNETDIR)/libdarknet.a:
 	$(TOOLPREFIX)make -C $(DARKNETDIR) GPU=$(GPU) CUDNN=$(GPU) obj libdarknet.a$(TOOLPOSTFIX)
 
+$(CLIENTBIN): client.c $(VENDORDIR)/json.c
+	g++ $$(pkg-config --cflags opencv) -I$(VENDORDIR) $^ -o $@ $$(pkg-config --libs opencv) -lcurl
+
 .PHONY: vendor
 vendor:
 	mkdir -p $(VENDORDIR)
@@ -74,6 +79,10 @@ vendor:
 	tar xf $(VENDORDIR)/mongoose.tar.gz -C $(VENDORDIR) --strip-components=1 mongoose-$(MONGOOSEVERSION)/mongoose.c
 	tar xf $(VENDORDIR)/mongoose.tar.gz -C $(VENDORDIR) --strip-components=1 mongoose-$(MONGOOSEVERSION)/mongoose.h
 	rm $(VENDORDIR)/mongoose.tar.gz
+	curl -L -o $(VENDORDIR)/json-parser.tar.gz https://github.com/udp/json-parser/archive/$(JSONPARSERVERSION).tar.gz
+	tar xf $(VENDORDIR)/json-parser.tar.gz -C $(VENDORDIR) --strip-components=1 json-parser-$(JSONPARSERVERSION)/json.c
+	tar xf $(VENDORDIR)/json-parser.tar.gz -C $(VENDORDIR) --strip-components=1 json-parser-$(JSONPARSERVERSION)/json.h
+	rm $(VENDORDIR)/json-parser.tar.gz
 	curl -L -o $(VENDORDIR)/darknet.tar.gz https://github.com/pjreddie/darknet/archive/$(DARKNETVERSION).tar.gz
 	mkdir -p $(DARKNETDIR)
 	tar xf $(VENDORDIR)/darknet.tar.gz -C $(DARKNETDIR) --strip-components=1
@@ -97,7 +106,7 @@ format:
 
 .PHONY: clean
 clean: container-clean
-	rm -rf $(DARKNETDIR)/obj $(DARKNETDIR)/libdarknet.a $(OBJDIR) $(BIN)
+	rm -rf $(DARKNETDIR)/obj $(DARKNETDIR)/libdarknet.a $(OBJDIR) $(BIN) $(CLIENTBIN)
 
 .PHONY: container
 container: .container-$(VERSION) container-name

@@ -1,4 +1,5 @@
 build/
+client
 darkweb
 libdarknet.a
 compile_commands.json
