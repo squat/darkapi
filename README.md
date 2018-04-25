@@ -10,6 +10,18 @@ The easiest way to use Darkweb is to run the pre-built container:
 docker run --rm --name darkweb -p 8080:8080 --device=/dev/nvidiactl --device=/dev/nvidia-uvm --device=/dev/nvidia0 --volume=/opt/nvidia:/usr/local/nvidia:ro squat/darkweb
 ```
 
+You can then make requests against the container service, e.g.:
+
+```sh
+curl 127.0.0.1:8080/api/yolo -F '=@./vendor/darknet/data/dog.jpg'
+```
+
+To deploy Darkweb to a Kubernetes cluster, you must have nodes with GPUs and with [device plugins installed](https://kubernetes.io/docs/concepts/cluster-administration/device-plugins/). Once ready, create the example deployment:
+
+```sh
+kubectl apply -f kubernetes/deployment.yaml
+```
+
 ## Building
 If you prefer to build Darkweb yourself, first download the sources:
 
