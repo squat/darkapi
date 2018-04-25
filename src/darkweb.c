@@ -1,6 +1,7 @@
 #include "darknet.h"
 #include "handlers.h"
 #include "mongoose.h"
+#include "util.h"
 #include <signal.h>
 #include <stdio.h>
 
@@ -51,14 +52,16 @@ int main(int argc, char *argv[]) {
     ctx.yolo = load_network("vendor/darknet/cfg/yolov3.cfg",
                             "vendor/darknet/yolov3.weights", 0);
     ctx.yolo_9000 = load_network("vendor/darknet/cfg/yolo9000.cfg",
-                            "vendor/darknet/yolo9000.weights", 0);
+                                 "vendor/darknet/yolo9000.weights", 0);
     /* Initialise labels */
     list *options = read_data_cfg("vendor/darknet/cfg/coco.data");
     char *labels_list = option_find_str(options, "names", "failed to load names");
+    free_list(options);
     ctx.labels_coco = get_labels(labels_list);
 
     options = read_data_cfg("vendor/darknet/cfg/combine9k.data");
     labels_list = option_find_str(options, "names", "failed to load names");
+    free_list(options);
     ctx.labels_imagenet = get_labels(labels_list);
 
     /* Open listening socket */
@@ -80,9 +83,11 @@ int main(int argc, char *argv[]) {
     }
 
     /* Cleanup */
-    free(ctx.yolo);
-    free(ctx.labels_coco);
-    free_list(options);
+    free_network(ctx.yolo);
+    free_network(ctx.yolo_9000);
+    free_network(ctx.tiny);
+    free_string_array(ctx.labels_imagenet, 9418);
+    free_string_array(ctx.labels_coco, 80);
     mg_mgr_free(&mgr);
 
     printf("Caught %s\n", s_signal);
