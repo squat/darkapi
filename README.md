@@ -30,7 +30,7 @@ git clone https://github.com/squat/darkweb
 cd darkweb
 ```
 
-By default, Darkweb is build inside of a NVIDIA Docker container to ensure that the necessary CUDA libraries are present and to guarantee consistent builds.
+By default, Darkweb is built inside of a NVIDIA Docker container to ensure that the necessary CUDA libraries are present and to guarantee consistent builds.
 
 ```sh
 make
