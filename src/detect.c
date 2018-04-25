@@ -35,23 +35,6 @@ static image load_image_memory(const unsigned char *buffer, const int len, int *
     return im;
 }
 
-/*static struct detection *get_detections(const int n, const int classes, const box *boxes, float **probabilities, const char **names, const float threshold) {*/
-    /*struct detection *ds = calloc(n, sizeof(struct detection));*/
-    /*int i, j, k = 0;*/
-
-    /*for (i = 0; i < n; i++) {*/
-        /*for (j = 0; j < classes; j++) {*/
-            /*if (probabilities[i][j] > threshold) {*/
-                /*ds[k].box = &boxes[i];*/
-                /*ds[k].label = names[j];*/
-                /*ds[k].prob = probabilities[i][j];*/
-                /*k++;*/
-            /*}*/
-        /*}*/
-    /*}*/
-    /*return ds;*/
-/*}*/
-
 static char *detections_to_json(const detection *ds, const int n, const int classes, const char **names, const float threshold) {
     char *d = NULL;
     char *json = NULL;
