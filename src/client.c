@@ -79,9 +79,16 @@ void json_to_detection(json_value *v, struct detection *d) {
 }
 
 struct detection *parse(const char *json, const size_t n, uint *dnum) {
-    json_value *v, *o;
-    o = json_parse(json, n);
+    json_value *o;
     struct detection *detections;
+    json_settings settings = { 0 };
+    char err [json_error_max];
+
+    o = json_parse_ex(&settings, json, n, err);
+    if (strlen(err)) {
+        printf("error: %s\n", err);
+        exit(1);
+    }
 
     if (o->type != json_object || o == NULL) {
         printf("error: response should be a JSON object\n");
