@@ -147,10 +147,10 @@ int main(int argc, char *argv[]) {
     curl_global_init(CURL_GLOBAL_ALL);
     curl = curl_easy_init();
     cap = cvCaptureFromCAM(0);
-    cvNamedWindow("Darkweb Demo", CV_WINDOW_AUTOSIZE);
+    cvNamedWindow("Darkapi Demo", CV_WINDOW_AUTOSIZE);
 
     if (argc < 2) {
-        printf("error: a Darkweb URL is required\n");
+        printf("error: a Darkapi URL is required\n");
         exit(1);
     }
 
@@ -163,7 +163,7 @@ int main(int argc, char *argv[]) {
         res = post(img, url, curl);
         ds = parse(res.buf, res.size, &dnum);
         draw_detections(frame, ds, dnum);
-        cvShowImage("Darkweb Demo", frame);
+        cvShowImage("Darkapi Demo", frame);
         c = cvWaitKey(30);
         free(ds);
         free(res.buf);

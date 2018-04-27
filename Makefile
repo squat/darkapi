@@ -6,7 +6,7 @@ AR := ar
 TOOLPREFIX :=
 TOOLPOSTFIX :=
 
-BIN := darkweb
+BIN := darkapi
 CLIENTBIN := client
 PKG := github.com/squat/$(BIN)
 DARKNETVERSION := master
@@ -40,7 +40,7 @@ VENDORDIR := vendor
 VPATH := $(SRCDIR):./$(VENDORDIR)
 DARKNETDIR := $(VENDORDIR)/darknet
 
-OBJ := detect.o handlers.o mongoose.o util.o darkweb.o libdarknet.a
+OBJ := detect.o handlers.o mongoose.o util.o darkapi.o libdarknet.a
 OBJS := $(addprefix $(OBJDIR)/, $(OBJ))
 DEPS := $(wildcard $(SRCDIR)/*.h) $(wildcard $(VENDORDIR)/*.h) Makefile
 WEIGHT := yolov3.weights yolov2-tiny.weights yolo9000.weights

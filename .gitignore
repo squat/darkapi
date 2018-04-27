@@ -1,6 +1,6 @@
 build/
 client
-darkweb
+darkapi
 libdarknet.a
 compile_commands.json
 .push*

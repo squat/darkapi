@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: darkweb
+  name: darkapi
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: darkweb
+      app: darkapi
   template:
     metadata:
       labels:
-        app: darkweb
+        app: darkapi
     spec:
       containers:
-      - name: darkweb
-        image: squat/darkweb
+      - name: darkapi
+        image: squat/darkapi
         imagePullPolicy: Always
         livenessProbe:
           httpGet:

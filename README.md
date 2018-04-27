@@ -1,13 +1,13 @@
-# Darkweb
+# Darkapi
 An API for Darknet image detection neural networks like YOLO.
 
-[![Build Status](https://travis-ci.org/squat/darkweb.svg?branch=master)](https://travis-ci.org/squat/darkweb)
+[![Build Status](https://travis-ci.org/squat/darkapi.svg?branch=master)](https://travis-ci.org/squat/darkapi)
 
 ## Running
-The easiest way to use Darkweb is to run the pre-built container:
+The easiest way to use Darkapi is to run the pre-built container:
 
 ```sh
-docker run --rm --name darkweb -p 8080:8080 --device=/dev/nvidiactl --device=/dev/nvidia-uvm --device=/dev/nvidia0 --volume=/opt/nvidia:/usr/local/nvidia:ro squat/darkweb
+docker run --rm --name darkapi -p 8080:8080 --device=/dev/nvidiactl --device=/dev/nvidia-uvm --device=/dev/nvidia0 --volume=/opt/nvidia:/usr/local/nvidia:ro squat/darkapi
 ```
 
 You can then make requests against the container service, e.g.:
@@ -16,21 +16,21 @@ You can then make requests against the container service, e.g.:
 curl 127.0.0.1:8080/api/yolo -F '=@./vendor/darknet/data/dog.jpg'
 ```
 
-To deploy Darkweb to a Kubernetes cluster, you must have nodes with GPUs and with [device plugins installed](https://kubernetes.io/docs/concepts/cluster-administration/device-plugins/). Once ready, create the example deployment:
+To deploy Darkapi to a Kubernetes cluster, you must have nodes with GPUs and with [device plugins installed](https://kubernetes.io/docs/concepts/cluster-administration/device-plugins/). Once ready, create the example deployment:
 
 ```sh
 kubectl apply -f kubernetes/deployment.yaml
 ```
 
 ## Building
-If you prefer to build Darkweb yourself, first download the sources:
+If you prefer to build Darkapi yourself, first download the sources:
 
 ```sh
-git clone https://github.com/squat/darkweb
-cd darkweb
+git clone https://github.com/squat/darkapi
+cd darkapi
 ```
 
-By default, Darkweb is built inside of a NVIDIA Docker container to ensure that the necessary CUDA libraries are present and to guarantee consistent builds.
+By default, Darkapi is built inside of a NVIDIA Docker container to ensure that the necessary CUDA libraries are present and to guarantee consistent builds.
 
 ```sh
 make
@@ -42,7 +42,7 @@ make
 make CONTAINERIZE=0
 ```
 
-If you want to build Darkweb without GPU support, set `GPU=0`:
+If you want to build Darkapi without GPU support, set `GPU=0`:
 
 ```sh
 make GPU=0
@@ -56,10 +56,10 @@ make weights
 
 ## Usage
 ### API
-By default, the Darkweb API server runs on port *8080*, though this can be configured with the `-p` flag.
+By default, the Darkapi server runs on port *8080*, though this can be configured with the `-p` flag.
 
 ```sh
-darkweb -p 1337
+darkapi -p 1337
 ```
 
 #### POST `/api/yolo`
