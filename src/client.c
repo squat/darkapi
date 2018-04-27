@@ -82,7 +82,7 @@ struct detection *parse(const char *json, const size_t n, uint *dnum) {
     json_value *o;
     struct detection *detections;
     json_settings settings = { 0 };
-    char err [json_error_max];
+    char err[json_error_max];
 
     o = json_parse_ex(&settings, json, n, err);
     if (strlen(err)) {
@@ -114,7 +114,7 @@ void draw_label(IplImage *img, char *label, CvPoint org, CvFont *font, CvScalar 
     int baseline;
     CvSize size;
     cvGetTextSize(label, font, &size, &baseline);
-    cvRectangle(img, { org.x - thickness, org.y + thickness }, { org.x + size.width + thickness, org.y - size.height - baseline - thickness }, background, CV_FILLED, 8, 0);
+    cvRectangle(img, { org.x - thickness, org.y - size.height - baseline - thickness }, { org.x + size.width + thickness, org.y + thickness }, background, CV_FILLED, 8, 0);
     cvPutText(img, label, { org.x, org.y - baseline }, font, color);
 }
 
@@ -128,7 +128,7 @@ void draw_detections(IplImage *img, struct detection *ds, uint dnum) {
         left = (ds[i].x - ds[i].w / 2.) * width;
         right = (ds[i].x + ds[i].w / 2.) * width;
         cvRectangle(img, { left, top }, { right, bottom }, { 255, 0, 0 }, 3, 8, 0);
-        draw_label(img, ds[i].label, { left, top }, &font, { 0, 0, 0 }, { 255, 0, 0 }, 3);
+        draw_label(img, ds[i].label, { left, top }, &font, { 0, 0, 0 }, { 255, 0, 0 }, 2);
         free(ds[i].label);
     }
 }
