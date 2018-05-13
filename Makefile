@@ -42,13 +42,17 @@ DARKNETDIR := $(VENDORDIR)/darknet
 
 OBJ := detect.o handlers.o mongoose.o util.o darkapi.o libdarknet.a
 OBJS := $(addprefix $(OBJDIR)/, $(OBJ))
+CLIENTOBJ := queue.o json.o
+CLIENTOBJS := $(addprefix $(OBJDIR)/, $(CLIENTOBJ))
 DEPS := $(wildcard $(SRCDIR)/*.h) $(wildcard $(VENDORDIR)/*.h) Makefile
 WEIGHT := yolov3.weights yolov2-tiny.weights yolo9000.weights
 WEIGHTS := $(addprefix $(DARKNETDIR)/, $(WEIGHT))
 
 CFLAGS := -DMG_ENABLE_CALLBACK_USERDATA -DMG_ENABLE_HTTP_STREAMING_MULTIPART -I$(SRCDIR) -I$(VENDORDIR) -I$(DARKNETDIR)/include
+CLIENTCFLAGS := '-DVERSION="$(VERSION)"' $$(pkg-config --cflags libavcodec libavformat libcurl opencv) -I$(SRCDIR) -I$(VENDORDIR)
 LDFLAGS :=
 LDLIBS := -lm -lpthread
+CLIENTLDLIBS := $$(pkg-config --libs libavcodec libavformat libavutil libcurl opencv) -lpthread
 ifeq ($(GPU), 1)
 LDFLAGS += -L/usr/local/cuda/lib64
 LDLIBS += -lstdc++ -lcudart -lcublas -lcurand -lcuda -lcudnn
@@ -68,8 +72,8 @@ $(OBJDIR)/libdarknet.a: $(DARKNETDIR)/libdarknet.a
 $(DARKNETDIR)/libdarknet.a:
 	$(TOOLPREFIX)make -C $(DARKNETDIR) GPU=$(GPU) CUDNN=$(GPU) obj libdarknet.a$(TOOLPOSTFIX)
 
-$(CLIENTBIN): client.c $(VENDORDIR)/json.c
-	g++ $$(pkg-config --cflags opencv) -I$(VENDORDIR) $^ -o $@ $$(pkg-config --libs opencv) -lcurl
+$(CLIENTBIN): client.c $(CLIENTOBJS)
+	g++ $(CLIENTCFLAGS) $^ -o $@ $(CLIENTLDLIBS)
 
 .PHONY: vendor
 vendor:
