@@ -8,7 +8,6 @@
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/time.h>
 #include <time.h>
 #include <unistd.h>
 extern "C" {
@@ -447,7 +446,6 @@ int main(int argc, char *argv[]) {
         c.out = cvCreateVideoWriter(a.out, f, c.fps, CvSize(width, height));
     }
 
-    printf("FRAMERATE: %f\n", c.fps);
     curl_global_init(CURL_GLOBAL_ALL);
 
     signal(SIGINT, signal_handler);
