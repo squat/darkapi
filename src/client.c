@@ -323,7 +323,7 @@ void run(struct config *c) {
         clock_gettime(CLOCK_MONOTONIC, &rstop);
         diff = 1000000000 * (rstop.tv_sec - start.tv_sec);
         diff += rstop.tv_nsec - start.tv_nsec;
-        mean = mean * (frames-1)/frames + diff/1000000.0/frames;
+        mean = mean * (frames - 1) / frames + diff / 1000000.0 / frames;
         if (c->preview) {
             cvShowImage("Darkapi Demo", frame);
             esc = cvWaitKey((int)(wait - mean) <= 0 ? 1 : (wait - mean));
@@ -455,7 +455,9 @@ int main(int argc, char *argv[]) {
     }
     run(&c);
     queue_stop(c.src->q);
-    pthread_join(c.thread, NULL);
+    if (c.src->camera) {
+        pthread_join(c.thread, NULL);
+    }
 
     if (c.out) {
         cvReleaseVideoWriter(&c.out);
