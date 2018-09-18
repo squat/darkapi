@@ -48,7 +48,7 @@ DEPS := $(wildcard $(SRCDIR)/*.h) $(wildcard $(VENDORDIR)/*.h) Makefile
 WEIGHT := yolov3.weights yolov2-tiny.weights yolo9000.weights
 WEIGHTS := $(addprefix $(DARKNETDIR)/, $(WEIGHT))
 
-CFLAGS := -DMG_ENABLE_CALLBACK_USERDATA -DMG_ENABLE_HTTP_STREAMING_MULTIPART -I$(SRCDIR) -I$(VENDORDIR) -I$(DARKNETDIR)/include
+CFLAGS := -DMG_ENABLE_CALLBACK_USERDATA -DMG_ENABLE_HTTP_STREAMING_MULTIPART -I$(SRCDIR) -I$(VENDORDIR) -I$(DARKNETDIR)/include -fPIC
 CLIENTCFLAGS := '-DVERSION="$(VERSION)"' $$(pkg-config --cflags libavcodec libavformat libcurl opencv) -I$(SRCDIR) -I$(VENDORDIR)
 LDFLAGS :=
 LDLIBS := -lm -lpthread
